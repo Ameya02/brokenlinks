@@ -3,20 +3,24 @@ import axios from 'axios';
 import { ScanLine } from 'lucide-react';
 import { useState } from 'react';
 import BrokenTable from './components/BrokenTable';
+import { error } from 'console';
 const Home = () => {
   const [url, setUrl] = useState('');
   const [brokenLinks, setBrokenLinks] = useState([]);
   const [totalLinks, setTotalLinks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const checkLinks = async () => {
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:3001/api/v1/checkURL', { url });
+      const res = await axios.post('https://brokenlinks-api.vercel.app/api/v1/checkURL', { url });
       setBrokenLinks(res.data.brokenLinks);
       setTotalLinks(res.data.links);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
+      setError(true);
       console.error('Error checking links:', error);
     }
   };
@@ -54,6 +58,7 @@ const Home = () => {
     ></span>
 </div>
         ):(<></>)}
+        {(!loading && error) && (<p className='text-red-500 text-xl'>Error checking links</p>)}
         {!loading &&  totalLinks.length > 0 ? (
           <div>
             {brokenLinks.length === 0 ? (
