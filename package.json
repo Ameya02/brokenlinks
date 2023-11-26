@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon ./BE/server.js",
+    "sev": "node ./BE/server.js",
     "client": "npm run dev --prefix ./FE",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -19,7 +20,6 @@
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "linkinator": "^6.0.2",
-    "morgan": "^1.10.0",
     "node-fetch": "^2.6.1"
   }
 }
