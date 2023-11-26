@@ -10,8 +10,10 @@ app.use(cors());
 app.use("/api/v1/",router);
 const server = createServer(app);
 
-const port = 3001;
-
+const port = process.env.PORT || 3001;
+app.get("/", (req, res) =>{
+  res.send("Server is Up and Running");
+})
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

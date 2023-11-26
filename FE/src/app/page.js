@@ -8,16 +8,18 @@ const Home = () => {
   const [brokenLinks, setBrokenLinks] = useState([]);
   const [totalLinks, setTotalLinks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   const checkLinks = async () => {
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:3001/api/v1/checkURL', { url });
+      const res = await axios.post('https://brokenlinks-api.vercel.app/api/v1/checkURL', { url });
       setBrokenLinks(res.data.brokenLinks);
       setTotalLinks(res.data.links);
       setLoading(false);
     } catch (error) {
-      console.error('Error checking links:', error);
+      setLoading(false);
+      setErr(true);
     }
   };
 
@@ -54,6 +56,7 @@ const Home = () => {
     ></span>
 </div>
         ):(<></>)}
+        {(!loading && err) && (<p className='text-red-500 text-xl'>Error checking links</p>)}
         {!loading &&  totalLinks.length > 0 ? (
           <div>
             {brokenLinks.length === 0 ? (
